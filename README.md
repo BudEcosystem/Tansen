@@ -13,8 +13,8 @@ conda create --name Tansen python=3.9 numba inflect
 conda activate Tansen
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 conda install transformers=4.29.2
-git clone https://github.com/neonbjb/Tansen-tts.git
-cd Tansen-tts
+git clone https://github.com/BudEcosystem/Tansen.git
+cd Tansen
 python setup.py install
 ```
 ### do_tts.py
