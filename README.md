@@ -1,4 +1,4 @@
-# TorToiSe
+# Tansen
 
 Tortoise is a text-to-speech program built with the following priorities:
 
@@ -6,72 +6,7 @@ Tortoise is a text-to-speech program built with the following priorities:
 2. Highly realistic prosody and intonation.
 3. speaking rate control
 
-This repo contains all the code needed to run Tortoise TTS in inference mode.
-
-Manuscript: https://arxiv.org/abs/2305.07243
-
-### Version history
-#### v2.6; 2023/7/26
-- Added speaking rate control
-- Bug fixes
-
-#### v2.5; 2023/7/09
-- Added kv_cache support 5x faster
-- Added deepspeed support 10x faster
-- Added half precision support
-  
-#### v2.4; 2022/5/17
-- Removed CVVP model. Found that it does not, in fact, make an appreciable difference in the output.
-- Add better debugging support; existing tools now spit out debug files which can be used to reproduce bad runs.
-
-#### v2.3; 2022/5/12
-- New CLVP-large model for further improved decoding guidance.
-- Improvements to read.py and do_tts.py (new options)
-
-#### v2.2; 2022/5/5
-- Added several new voices from the training set.
-- Automated redaction. Wrap the text you want to use to prompt the model but not be spoken in brackets.
-- Bug fixes
-
-#### v2.1; 2022/5/2
-- Added ability to produce totally random voices.
-- Added ability to download voice conditioning latent via a script, and then use a user-provided conditioning latent.
-- Added ability to use your own pretrained models.
-- Refactored directory structures.
-- Performance improvements & bug fixes.
-
-## What's in a name?
-
-I'm naming my speech-related repos after Mojave desert flora and fauna. Tortoise is a bit tongue in cheek: this model
-is insanely slow. It leverages both an autoregressive decoder **and** a diffusion decoder; both known for their low
-sampling rates. On a K80, expect to generate a medium sized sentence every 2 minutes.
-
-## Demos
-
-See [this page](http://nonint.com/static/tortoise_v2_examples.html) for a large list of example outputs.
-
-Cool application of Tortoise+GPT-3 (not by me): https://twitter.com/lexman_ai
-
-## Usage guide
-
-### Local Installation
-
-If you want to use this on your own computer, you must have an NVIDIA GPU.
-
-On Windows, I **highly** recommend using the Conda installation path. I have been told that if you do not do this, you
-will spend a lot of time chasing dependency problems.
-
-First, install miniconda: https://docs.conda.io/en/latest/miniconda.html
-
-Then run the following commands, using anaconda prompt as the terminal (or any other terminal configured to work with conda)
-
-This will:
-1. create conda environment with minimal dependencies specified
-1. activate the environment
-1. install pytorch with the command provided here: https://pytorch.org/get-started/locally/
-1. clone tortoise-tts
-1. change the current directory to tortoise-tts
-1. run tortoise python setup install script
+# Setup
 
 ```shell
 conda create --name tortoise python=3.9 numba inflect
@@ -82,13 +17,6 @@ git clone https://github.com/neonbjb/tortoise-tts.git
 cd tortoise-tts
 python setup.py install
 ```
-
-Optionally, pytorch can be installed in the base environment, so that other conda environments can use it too. To do this, simply send the `conda install pytorch...` line before activating the tortoise environment.
-
-> **Note:** When you want to use tortoise-tts, you will always have to ensure the `tortoise` conda environment is activated.
-
-If you are on windows, you may also need to install pysoundfile: `conda install -c conda-forge pysoundfile`
-
 ### do_tts.py
 
 This script allows you to speak a single phrase with one or more voices.
@@ -114,54 +42,17 @@ argument.
 ### API
 
 Tortoise can be used programmatically, like so:
-
-```python
-reference_clips = [utils.audio.load_audio(p, 22050) for p in clips_paths]
-tts = api.TextToSpeech()
-pcm_audio = tts.tts_with_preset("your text here", voice_samples=reference_clips, preset='fast')
-```
-
-To use deepspeed:
-
-```python
-reference_clips = [utils.audio.load_audio(p, 22050) for p in clips_paths]
-tts = api.TextToSpeech(use_deepspeed=True)
-pcm_audio = tts.tts_with_preset("your text here", voice_samples=reference_clips, preset='fast')
-```
-
-To use kv cache:
-
-```python
-reference_clips = [utils.audio.load_audio(p, 22050) for p in clips_paths]
-tts = api.TextToSpeech(kv_cache=True)
-pcm_audio = tts.tts_with_preset("your text here", voice_samples=reference_clips, preset='fast')
-```
-
-To run model in float16:
-
-```python
-reference_clips = [utils.audio.load_audio(p, 22050) for p in clips_paths]
-tts = api.TextToSpeech(half=True)
-pcm_audio = tts.tts_with_preset("your text here", voice_samples=reference_clips, preset='fast')
-```
-for Faster runs use all three:
-
 ```python
 reference_clips = [utils.audio.load_audio(p, 22050) for p in clips_paths]
 tts = api.TextToSpeech(use_deepspeed=True, kv_cache=True, half=True)
 pcm_audio = tts.tts_with_preset("your text here", voice_samples=reference_clips, preset='fast')
 ```
+
 ## Voice customization guide
 
 Tortoise was specifically trained to be a multi-speaker model. It accomplishes this by consulting reference clips.
 
 These reference clips are recordings of a speaker that you provide to guide speech generation. These clips are used to determine many properties of the output, such as the pitch and tone of the voice, speaking speed, and even speaking defects like a lisp or stuttering. The reference clip is also used to determine non-voice related aspects of the audio output like volume, background noise, recording quality and reverb.
-
-### Provided voices
-
-This repo comes with several pre-packaged voices. Voices prepended with "train_" came from the training set and perform
-far better than the others. If your goal is high quality speech, I recommend you pick one of them. If you want to see
-what Tortoise can do for zero-shot mimicking, take a look at the others.
 
 ### Adding a new voice
 
@@ -187,24 +78,6 @@ good clips:
 6. The text being spoken in the clips does not matter, but diverse text does seem to perform better.
 
 ## Advanced Usage
-
-### Generation settings
-
-Tortoise is primarily an autoregressive decoder model combined with a diffusion model. Both of these have a lot of knobs
-that can be turned that I've abstracted away for the sake of ease of use. I did this by generating thousands of clips using
-various permutations of the settings and using a metric for voice realism and intelligibility to measure their effects. I've
-set the defaults to the best overall settings I was able to find. For specific use-cases, it might be effective to play with
-these settings (and it's very likely that I missed something!)
-
-These settings are not available in the normal scripts packaged with Tortoise. They are available, however, in the API. See
-```api.tts``` for a full list.
-
-### Prompt engineering
-
-Some people have discovered that it is possible to do prompt engineering with Tortoise! For example, you can evoke emotion
-by including things like "I am really sad," before your text. I've built an automated redaction system that you can use to
-take advantage of this. It works by attempting to redact any text in the prompt surrounded by brackets. For example, the
-prompt "\[I am really sad,\] Please feed me." will only speak the words "Please feed me" (with a sad tonality).
 
 ### Playing with the voice latent
 
@@ -269,42 +142,3 @@ After some thought, I have decided to go forward with releasing this. Following 
 3. The above points could likely be resolved by scaling up the model and the dataset. For this reason, I am currently withholding details on how I trained the model, pending community feedback.
 4. I am releasing a separate classifier model which will tell you whether a given audio clip was generated by Tortoise or not. See `tortoise-detect` above.
 5. If I, a tinkerer with a BS in computer science with a ~$15k computer can build this, then any motivated corporation or state can as well. I would prefer that it be in the open and everyone know the kinds of things ML can do.
-
-### Diversity
-
-The diversity expressed by ML models is strongly tied to the datasets they were trained on.
-
-Tortoise was trained primarily on a dataset consisting of audiobooks. I made no effort to
-balance diversity in this dataset. For this reason, Tortoise will be particularly poor at generating the voices of minorities
-or of people who speak with strong accents.
-
-## Looking forward
-
-Tortoise v2 is about as good as I think I can do in the TTS world with the resources I have access to. A phenomenon that happens when
-training very large models is that as parameter count increases, the communication bandwidth needed to support distributed training
-of the model increases multiplicatively. On enterprise-grade hardware, this is not an issue: GPUs are attached together with
-exceptionally wide buses that can accommodate this bandwidth. I cannot afford enterprise hardware, though, so I am stuck.
-
-I want to mention here
-that I think Tortoise could be a **lot** better. The three major components of Tortoise are either vanilla Transformer Encoder stacks
-or Decoder stacks. Both of these types of models have a rich experimental history with scaling in the NLP realm. I see no reason
-to believe that the same is not true of TTS.
-
-## Acknowledgements
-
-This project has garnered more praise than I expected. I am standing on the shoulders of giants, though, and I want to
-credit a few of the amazing folks in the community that have helped make this happen:
-
-- Hugging Face, who wrote the GPT model and the generate API used by Tortoise, and who hosts the model weights.
-- [Ramesh et al](https://arxiv.org/pdf/2102.12092.pdf) who authored the DALLE paper, which is the inspiration behind Tortoise.
-- [Nichol and Dhariwal](https://arxiv.org/pdf/2102.09672.pdf) who authored the (revision of) the code that drives the diffusion model.
-- [Jang et al](https://arxiv.org/pdf/2106.07889.pdf) who developed and open-sourced univnet, the vocoder this repo uses.
-- [Kim and Jung](https://github.com/mindslab-ai/univnet) who implemented univnet pytorch model.
-- [lucidrains](https://github.com/lucidrains) who writes awesome open source pytorch models, many of which are used here.
-- [Patrick von Platen](https://huggingface.co/patrickvonplaten) whose guides on setting up wav2vec were invaluable to building my dataset.
-
-## Notice
-
-Tortoise was built entirely by me using my own hardware. My employer was not involved in any facet of Tortoise's development.
-
-If you use this repo or the ideas therein for your research, please cite it! A bibtex entree can be found in the right pane on GitHub.
