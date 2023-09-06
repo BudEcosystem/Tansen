@@ -1,11 +1,13 @@
 ---
 
-<div align="center"><h1 align="center">~ Tansen ~</h1></div>
 
 
-<p align="center"><i>Democratizing access to LLMs for the open-source community.<br>Let's advance AI, together. </i></p>
+<p align="center"><i>Democratizing access to LLMs, Multi-Modal Gen AI models for the open-source community.<br>Let's advance AI, together. </i></p>
 
 ---
+<p align="center">
+  <img src="Instagram post - 4.png alt="Tensen Logo"/>
+</p>
 
 
 ## 🎉 Tansen 
