@@ -21,6 +21,8 @@ Tansen is a text-to-speech program built with the following priorities:
 2. Highly realistic prosody and intonation.
 3. Speaking rate control
 
+[Huggingface 🤗 Models](https://huggingface.co/budecosystem/Tansen)
+
 <h2 align="left">🎧 Demos </h2>
 
 
