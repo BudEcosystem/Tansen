@@ -23,11 +23,11 @@ Tansen is a text-to-speech program built with the following priorities:
 
 ### Random Voices
 
-[random_0_0.wav](results/images/random_0_0.wav)
+[random_0_0.webm](results/images/random_0_0.webm)
 
-[random_0_0.wav](results/images/random_0_1.wav)
+[random_0_0.webm](results/images/random_0_1.webm)
 
-[random_0_0.wav](results/images/random_0_2.wav)
+[random_0_0.webm](results/images/random_0_2.webm)
 
 <h2 align="left">💻 Getting Started on GitHub </h2>
 
