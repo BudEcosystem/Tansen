@@ -23,11 +23,11 @@ Tansen is a text-to-speech program built with the following priorities:
 
 ### Random Voices
 
-[random_0_0.webm](results/random_0_0.webm)
+[random_0_0.webm](https://github.com/BudEcosystem/Tansen/assets/4546714/9a6ce191-2646-497e-bf48-003f2bf0bb8d)
 
-[random_0_0.webm](results/random_0_1.webm)
+[random_0_1.webm](https://github.com/BudEcosystem/Tansen/assets/4546714/87bf5f7c-ae47-4aa4-a110-b5c9899e4446)
 
-[random_0_0.webm](results/random_0_2.webm)
+[random_0_2.webm](https://github.com/BudEcosystem/Tansen/assets/4546714/5549c464-c670-4e7a-987c-c5d79b32bf4b)
 
 <h2 align="left">💻 Getting Started on GitHub </h2>
 
