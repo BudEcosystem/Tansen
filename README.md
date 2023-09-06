@@ -14,7 +14,7 @@ Tansen is a text-to-speech program built with the following priorities:
 
 1. Strong multi-voice capabilities.
 2. Highly realistic prosody and intonation.
-3. speaking rate control
+3. Speaking rate control
 
 <h2 align="left">🎧 Demos </h2>
 
