@@ -1,16 +1,19 @@
+
+
+
+
+
+
+<p align="center">
+  <img src="Instagram post - 4.png" alt="Tensen Logo" width="300" height="300"/>
+</p>
+
 ---
-
-
 
 <p align="center"><i>Democratizing access to LLMs, Multi-Modal Gen AI models for the open-source community.<br>Let's advance AI, together. </i></p>
 
 ---
-<p align="center">
-  <img src="Instagram post - 4.png alt="Tensen Logo"/>
-</p>
 
-
-## 🎉 Tansen 
 
 Tansen is a text-to-speech program built with the following priorities:
 
@@ -20,10 +23,9 @@ Tansen is a text-to-speech program built with the following priorities:
 
 <h2 align="left">🎧 Demos </h2>
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](http://bud.studio)
-[![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](http://bud.studio)
 
-### Random Voices
+
+### Demos
 
 [random_0_0.webm](https://github.com/BudEcosystem/Tansen/assets/4546714/9a6ce191-2646-497e-bf48-003f2bf0bb8d)
 
